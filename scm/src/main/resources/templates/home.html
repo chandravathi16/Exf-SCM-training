@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>SCM | Welcome to SCMXPertLite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+    	/*
+        header{
+          position: fixed;
+          width: 100%;
+          top: 0;
+          left: 0;
+        }
+        */
+        #welcome-msg{
+        	background-color: rgb(41, 128, 185);  
+        	width: 50%; margin: 0 auto;  
+        	display: flex;
+			justify-content: center;
+			align-items: center;
+  			text-align: center;
+ 		 	height: 60px;
+        }
+    </style>
+</head>
+<body style="background-image: url('https://previews.123rf.com/images/sitthinan/sitthinan1707/sitthinan170700085/82560226-shipping-delivery-car-ship-plane-transport-on-a-background-map-of-the-world-fast-delivery.jpg');  background-repeat: no-repeat;
+  background-size: cover;height: 500px;">
+<div id="welcome-msg">
+	<h3 style="color: white;" class="text-center">Welcome to SCMXPertLite</h3>
+</div>
+<h5 style="display: flex; justify-content: end; align-items: end; flex-direction: row;" th:text="${username}"></h5>
+<header id = "header">
+    <nav class="navbar navbar-expand-lg navbar-light" role="navigation">
+        <a class="navbar-brand" href="https://exafluence.com/"> 
+            <img src="https://webimages.mongodb.com/kjt0rg13figowedmr-exafluence.png?auto=format%2Ccompress&ch=DPR" width="100" height="50" alt="logo"/>
+        </a>
+        <div>
+	   		<div class="navbar-nav">
+		        
+		        <a class="nav-item nav-link active" onclick="myshipments()">Shipments List</a> 
+		        
+	    	</div>
+		</div> 
+		<div style="display: flex; justify-content: end; align-items: end; flex-direction: row;">
+			<div style="margin-right: 980px;"></div>
+      		<div><a class="loginlogoutlink-logout btn btn-outline-primary"  th:href="@{/logout}">Logout</a></div>
+                <!--  onclick="confirm('Are you sure you want to logout SCMXPertLite?')" -->
+      	</div>
+		<!--  
+        <span class="loginlogoutlink" style="padding-right: 20px;">
+            <a class="loginlogoutlink-logout btn btn-outline-primary"
+                onclick="confirm('Are you sure you want to logout SCMXPertLite?')" th:href="@{/logout}">Logout</a>
+        </span>
+        -->
+    </nav>
+</header>
+<br><br/>
+	<!--  
+	<div class="text-center">
+		<h3 style="color:black;" class="text-center">Welcome to SCMXPertLite</h3><h3 th:text="${username}"></h3>
+    </div>
+    -->
+    <br/><br><br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col" style="margin-left: 70px;">
+               <h3>To Create a New Shipment</h3>
+               <button type="button" class="btn btn-primary" onclick="shipment()"><b>Create Shipment</b></button>
+            </div>
+            <div class="col" style="margin-right: 5px;">
+            	<h3>To see Device Data Stream</h3>
+                <button type="button" class="btn btn-primary" onclick="datastream()"><b>Device Data Stream</b></button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+function shipment() {
+  window.location.href="/addShipment";
+}
+function datastream() {
+   window.location.href="/getData"; 
+}
+function myshipments() {
+	window.location.href="/shipments";
+}
+  
+</script>
+
+</html>
+    
+   
