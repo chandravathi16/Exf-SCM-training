@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>SCM | Create New Shipment</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+        span{
+            color: red;
+        }
+        .col{
+            display: table-cell;
+        }
+        #welcome-msg{
+        	background-color: rgb(41, 128, 185);  
+        	width: 50%; margin: 0 auto;  
+        	display: flex;
+			justify-content: center;
+			align-items: center;
+  			text-align: center;
+ 		 	height: 60px;
+        }
+    </style>
+</head>
+<body style="background-image: url('https://previews.123rf.com/images/sitthinan/sitthinan1707/sitthinan170700085/82560226-shipping-delivery-car-ship-plane-transport-on-a-background-map-of-the-world-fast-delivery.jpg');  background-repeat: no-repeat;
+  background-size: cover;height: 500px;">
+<div id="welcome-msg">
+	<h3 style="color: white;" class="text-center">Welcome to SCMXPertLite</h3>
+</div>
+<h4 style="display: flex; justify-content: end; align-items: end; flex-direction: row;" th:text="${username}"></h4>
+<header id = "header">
+    <nav class="navbar navbar-expand-lg navbar-light" role="navigation">
+        <a class="navbar-brand" href="https://exafluence.com/"> 
+            <img src="https://webimages.mongodb.com/kjt0rg13figowedmr-exafluence.png?auto=format%2Ccompress&ch=DPR" width="100" height="50" alt="logo"/>
+        </a>
+        <div>
+	   		<div class="navbar-nav">
+		        <a class="nav-item nav-link active" onclick="datastream()">DeviceData</a>  
+	    	</div>
+		</div> 
+		<div style="display: flex; justify-content: end; align-items: end; flex-direction: row;">
+			<div style="margin-right: 980px;"></div>
+      		<div><a class="loginlogoutlink-logout btn btn-outline-primary"  th:href="@{/logout}">Logout</a></div>
+                <!--  onclick="confirm('Are you sure you want to logout SCMXPertLite?')" -->
+      	</div>
+    </nav>
+</header>
+<section class="container-fluid">
+    <!-- row and justify-content-center class is used to place the form in center -->
+    <section class="row justify-content-center">
+        <section class="bg-light" style="padding: 20px;">
+            <form id="shipmentform" class="form-container" method="post">
+                <h4 class="text-center font-weight-bold">Create New Shipment</h4>
+                <span id="msg"></span> <span class="text-danger"></span>
+                <div class="alert alert-info" id="newshipmentSuccess" style="display: none;"></div>
+   				<div class="alert alert-danger" id="newshipmentError" style="display: none;"></div> 
+                <div class="row">
+                    <div class="col">
+                        <label for="shipmentNo" class="label">Shipment Number<span> *</span></label>
+                        <input id="shipmentNo" placeholder="Shipment Number" type="text" name="shipmentNumber" autocomplete="off" class="form-control" required/>
+                        <span id="shipno" class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label for="containerNum" class="label">Container Number<span> *</span></label>
+                        <input id="containerNum" type="number" placeholder="Container Number" name="containerNumber" autocomplete="off" class="form-control" required/>
+                        <span id="containerNo" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="label" id="route">Route Details<span> *</span> </label>
+                            <select class="form-control" name="routeDetails" required>
+                                <option value="">Select Route</option>
+                                <option value="Hyderabad">Hyderabad, India</option>
+                                <option value="Chennai">Tirupati, India</option>
+                                <option value="Tirupati">Chennai, India</option>
+                                <option value="US"> </option>
+                            </select>
+                        <span id="routeDetails" class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label class="label" id="goods">Goods Type<span> *</span></label>
+                            <select class="form-control" name="goods" required>
+                                <option value="">Select Goods</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Groceries">Groceries</option>
+                                <option value="Pharmaceuticals">Pharmaceuticals</option>
+                            </select>
+                        <span id="goods_type" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="label" id="devices">Device<span> *</span></label>
+                            <select class="form-control" name="device" required>
+                                <option value="">Select Device</option>
+                                <option value="20230101">20230101</option>
+                                <option value="20230102">20230102</option>
+                                <option value="20230103">20230103</option>
+                                <option value="20230104">20230104</option>
+                            </select>
+                        <span id="device" class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label for="delivery_date" class="label">Delivery Date<span> *</span></label>
+                        <input id="delivery_date" type="date" name="deliveryDate" autocomplete="off" class="form-control" required/>
+                        <span id="deliverydate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+				        <label for="PONum" class="label">PO Number<span> *</span></label>
+				        <input id="PONum" type="text" placeholder="PO Number" name="pONumber" autocomplete="off" class="form-control" required/>
+				        <span id="POno" class="text-danger"></span>
+    				</div>
+                    <div class="col">
+                        <label for="deliveryNum" class="label">Delivery Number<span> *</span></label>
+                        <input id="deliveryNum" type="number" placeholder="Delivery Number" name="deliveryNumber" autocomplete="off" class="form-control" required/>
+                        <span id="deliveryno" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                   <div class="col">
+				        <label for="NDCNum" class="label">NDC Number<span> *</span></label>
+				        <input id="NDCNum" type="text" placeholder="NDC Number" name="nDCNumber" autocomplete="off" class="form-control" required/>
+				        <span id="NDCno" class="text-danger"></span>
+    				</div>
+                    <div class="col">
+                        <label for="batchId" class="label">Batch Id<span> *</span></label>
+                        <input autocomplete="off" class="form-control" id="batchId" name="batchId" placeholder="Batch Id"
+                               type="number" required/>
+                        <span id="bid" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="label">Serial number of Goods<span> *</span></label>
+                        <label for="serialNoGoods"></label><input id="serialNoGoods" type="text" placeholder="Serial Number of Goods" name="serialNumberOfGoods" autocomplete="off" class="form-control" required/>
+                        <span id="serialGoods" class="text-danger"></span>
+                    </div>
+                   	<div class="col">
+    					<label for="shipmentDescription" rows="3" cols="15">Shipment Description<span> *</span></label>
+					    <textarea id="shipmentDescription" placeholder="Shipment Description" name="shipmentDescription" autocomplete="off" class="form-control" required> </textarea>
+					    <span id="description" class="text-danger"></span>
+				   	</div>
+
+                </div>
+                <br/>
+    			<div>
+	                <button type="submit" style="float:left;" class="btn btn-primary" value="Submit" onclick="newshipmentFun()">CREATE SHIPMENT</button> 
+	                <button type="reset" style="float:right;" class="btn btn-danger" value="Reset">CLEAR DETAILS</button>
+            	</div>
+            </form>
+        </section>
+    </section>
+</section>
+
+</body>
+
+<script>
+function shipment() {
+  window.location.href="/addShipment"; 
+}
+    
+function newshipmentFun(event){
+	var myHeaders = new Headers();
+	myHeaders.append("Content-Type", "application/json");
+	const thisForm = document.getElementById('shipmentform');
+    console.log(thisForm,"form data")
+	const formData = new FormData(thisForm).entries();
+	var raw = JSON.stringify(Object.fromEntries(formData));
+	var requestOptions = {
+  		method: 'POST',
+  		headers: myHeaders,
+  		body: raw,
+  		redirect: 'follow'
+	};	
+	thisForm.addEventListener('submit', function (e) {
+		e.preventDefault();
+		fetch("http://localhost:8082/addShipment", requestOptions)
+		  .then(response => response.text())
+		  .then(result => {
+		  		console.log(result)
+		  		if(result.includes("Exists")){
+					document.getElementById('newshipmentSuccess').style.display = "none";
+					document.getElementById('newshipmentError').style.display = "block";
+					document.getElementById('newshipmentError').innerText = result;
+					thisForm.reset();					
+				}	
+		  		else{
+		  		
+					document.getElementById('newshipmentError').style.display = "none";
+					document.getElementById('newshipmentSuccess').style.display = "block";
+					document.getElementById('newshipmentSuccess').innerText = result;
+					thisForm.reset();
+				
+				}
+		  		})
+		  .catch(error => console.log('error', error));
+	});
+
+}
+
+
+//logics - to call addShipment and devicedata (UI)
+function shipment() {
+	window.location.href="/addShipment";
+}
+function datastream() {
+	window.location.href="/getData"; 
+}
+
+</script>
+
+
+</html>
+

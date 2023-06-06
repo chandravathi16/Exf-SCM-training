@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SCM | My Shipments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <style>
+    span {
+      color: red;
+    }
+
+    #welcome-msg {
+      background-color: rgb(41, 128, 185);
+      width: 50%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 60px;
+    }
+  </style>
+ <script type="text/javascript" src="../static/js/shipments_list.js"></script> 
+</head>
+
+<body style="background-image: url('https://previews.123rf.com/images/sitthinan/sitthinan1707/sitthinan170700085/82560226-shipping-delivery-car-ship-plane-transport-on-a-background-map-of-the-world-fast-delivery.jpg'); background-repeat: no-repeat; background-size: cover;height: 500px;">
+  <div id="welcome-msg">
+    <h3 style="color: white;" class="text-center">Welcome to SCMXPertLite</h3>
+  </div>
+  <h5 style="margin-right:20px;" th:text="${username}"></h5>
+  <header id="header">
+    <nav class="navbar navbar-expand-lg navbar-light" role="navigation">
+      <a class="navbar-brand" href="https://exafluence.com/">
+        <img src="https://webimages.mongodb.com/kjt0rg13figowedmr-exafluence.png?auto=format%2Ccompress&ch=DPR" width="100" height="50" alt="logo" />
+      </a>
+      <div>
+        <div class="navbar-nav">
+         
+          <a class="nav-item nav-link active" onclick="shipment()">CreateShipment</a> 
+        </div>
+      </div>
+      <div style="display: flex; justify-content: end; align-items: end; flex-direction: row;">
+        <div style="margin-right: 980px;"></div>
+        <div><a class="loginlogoutlink-logout btn btn-outline-primary"  th:href="@{/logout}">Logout</a></div>
+                <!--  onclick="confirm('Are you sure you want to logout SCMXPertLite?')" -->
+      </div>
+    </nav>
+  </header>
+  <br><br>
+
+  <div class="container-fluid" style="border-radius:0px;">
+    <div id="table-container" class="table-wrapper-scroll-y my-custom-scrollbar">
+      <table id="shipment-table" class="table">
+        <thead class="table-primary table-bordered black">
+          <tr>
+            <th>SI.No</th>
+            <th>Shipment Number</th>
+            <th>Route Details</th>
+            <th>Device</th>
+            <th>PO Number</th>
+            <th>NDC Number</th>
+            <th>Serial Number of Goods</th>
+            <th>Container Number</th>
+            <th>Goods</th>
+            <th>Delivery Date</th>
+            <th>Delivery Number</th>
+            <th>Batch Id</th>
+            <th>Shipment Description</th>
+          </tr>
+        </thead>
+        <tbody id="data-table-body">
+  			<tr th:each="shipment, index : ${MyShipments}">
+		    <td th:text="${index.count}"></td>
+		    <td th:text="${shipment.shipmentNumber}"></td>
+            <td th:text="${shipment.routeDetails}"></td>
+            <td th:text="${shipment.device}"></td>
+            <td th:text="${shipment.pONumber}"></td>
+            <td th:text="${shipment.nDCNumber}"></td>
+            <td th:text="${shipment.serialNumberOfGoods}"></td>
+            <td th:text="${shipment.containerNumber}"></td>
+            <td th:text="${shipment.goods}"></td>
+            <td th:text="${shipment.deliveryDate}"></td>
+            <td th:text="${shipment.deliveryNumber}"></td>
+            <td th:text="${shipment.batchId}"></td>
+            <td th:text="${shipment.shipmentDescription}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+<script>
+
+function shipment() {
+	window.location.href="/createShipment";
+}
+
+</script>
+
+</html>
