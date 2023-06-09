@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    image: chandravathi/scm:latest
+    image: chandravathi/scm-app:latest
     ports:
       - 8082:8082
 
@@ -20,6 +20,10 @@ services:
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_HEAP_OPTS=-Xmx1G
+      - KAFKA_LOG_RETENTION_HOURS=1
+      - KAFKA_LOG_RETENTION_BYTES=524288000
+      - KAFKA_LOG_CLEANUP_POLICY=delete
+      - KAFKA_KRAFT_CLUSTER_ID=scm2
     depends_on:
       - zookeeper
 
@@ -27,6 +31,7 @@ services:
     image: chandravathi/ck-server:latest
     ports:
       - 9000:9000
+
 
   producer:
     image: chandravathi/ck-producer:latest
@@ -40,50 +45,47 @@ services:
   
   
 
-
 # AWS : docker-compose.yml    
-
 #version: "3"
 #services:
 #  app:
-#    image: chandravathi/ck-scm:latest
+#    image: chandravathi/scm-app:latest
 #    ports:
-#      - 8082:8082
-
+#     - 8082:8082
+#
 #  zookeeper:
-#    image: docker.io/bitnami/zookeeper:latest
+#    image: confluentinc/cp-zookeeper:latest
 #    ports:
 #      - 2181:2181
 #    environment:
-#      - ALLOW_ANONYMOUS_LOGIN=yes
-
+#      - ZOOKEEPER_CLIENT_PORT=2181
+#      - ZOOKEEPER_TICK_TIME=2000
+#
 #  kafka:
-#    image: docker.io/bitnami/kafka:latest
+#    image: confluentinc/cp-kafka:latest
 #    ports:
 #      - 9092:9092
+#    depends_on:
+#      - zookeeper
 #    environment:
-#      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-#      - ALLOW_PLAINTEXT_LISTENER=yes
-#      - KAFKA_HEAP_OPTS=-Xmx1G
+#      - KAFKA_BROKER_ID=1
+#      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+#      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+#      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9093
+#      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+#      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=false
 #      - KAFKA_LOG_RETENTION_HOURS=1
 #      - KAFKA_LOG_RETENTION_BYTES=524288000
 #      - KAFKA_LOG_CLEANUP_POLICY=delete
-#      - KAFKA_KRAFT_CLUSTER_ID=scm
-#    depends_on:
-#      - zookeeper0
-
+#      - KAFKA_KRAFT_CLUSTER_ID=scm2
+#
 #  sockets:
 #    image: chandravathi/ck-server:latest
 #    ports:
 #      - 9000:9000
-
+#
 #  producer:
 #    image: chandravathi/ck-producer:latest
-#    depends_on:
-#      - kafka
-
-#  consumer:
-#    image: chandravathi/ck-consumer:latest
 #    depends_on:
 #      - kafka
 
